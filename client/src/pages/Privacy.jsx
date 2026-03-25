@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
-const EMAIL = 'rlawhdrl3702@naver.com';
+const EMAIL = 'rlawhdrl3702@gmail.com';
 
 export default function Privacy() {
   const { t } = useTranslation();
