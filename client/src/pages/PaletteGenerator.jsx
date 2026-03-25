@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import toast from 'react-hot-toast';
 import { Copy, RefreshCw } from 'lucide-react';
 import { generatePalette, isValidHex } from '../utils/color.js';
@@ -22,6 +22,7 @@ function ColorSwatch({ hex }) {
 
 export default function PaletteGenerator() {
   const { t } = useTranslation();
+  useEffect(() => { document.title = `${t('palette.title')} — ColorKit`; }, [t]);
   const [hex, setHex] = useState('#7c3aed');
   const [input, setInput] = useState('#7c3aed');
 

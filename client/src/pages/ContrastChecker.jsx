@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { getContrastRatio, isValidHex } from '../utils/color.js';
 import { CheckCircle, XCircle } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 export default function ContrastChecker() {
   const { t } = useTranslation();
+  useEffect(() => { document.title = `${t('contrast.title')} — ColorKit`; }, [t]);
   const [fg, setFg] = useState('#ffffff');
   const [bg, setBg] = useState('#7c3aed');
 

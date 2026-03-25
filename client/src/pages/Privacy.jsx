@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
 const EMAIL = 'rlawhdrl3702@gmail.com';
 
 export default function Privacy() {
   const { t } = useTranslation();
+  useEffect(() => { document.title = `${t('privacy.title')} — ColorKit`; }, [t]);
 
   const sections = [
     { title: t('privacy.collectTitle'), body: t('privacy.collectBody') },

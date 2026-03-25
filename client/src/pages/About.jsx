@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Palette } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
@@ -6,6 +6,7 @@ const EMAIL = 'rlawhdrl3702@gmail.com';
 
 export default function About() {
   const { t } = useTranslation();
+  useEffect(() => { document.title = `${t('about.title')} — ColorKit`; }, [t]);
 
   const tools = [
     'HEX ↔ RGB Converter', 'RGB ↔ HSL Converter', 'Palette Generator',

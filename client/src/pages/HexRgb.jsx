@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import toast from 'react-hot-toast';
 import { Copy, ArrowLeftRight } from 'lucide-react';
 import { hexToRgb, rgbToHex, isValidHex } from '../utils/color.js';
@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 
 export default function HexRgb() {
   const { t } = useTranslation();
+  useEffect(() => { document.title = `${t('hexRgb.title')} — ColorKit`; }, [t]);
   const [hex, setHex] = useState('#7c3aed');
   const [r, setR] = useState(124);
   const [g, setG] = useState(58);

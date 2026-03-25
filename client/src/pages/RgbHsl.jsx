@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import toast from 'react-hot-toast';
 import { Copy } from 'lucide-react';
 import { rgbToHsl, hslToRgb, rgbToHex } from '../utils/color.js';
@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 
 export default function RgbHsl() {
   const { t } = useTranslation();
+  useEffect(() => { document.title = `${t('rgbHsl.title')} — ColorKit`; }, [t]);
   const [r, setR] = useState(124);
   const [g, setG] = useState(58);
   const [b, setB] = useState(237);

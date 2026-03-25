@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback } from 'react';
+import React, { useState, useRef, useCallback, useEffect } from 'react';
 import toast from 'react-hot-toast';
 import { Upload, Copy } from 'lucide-react';
 import { rgbToHex } from '../utils/color.js';

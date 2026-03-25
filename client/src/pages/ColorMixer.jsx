@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import toast from 'react-hot-toast';
 import { Copy } from 'lucide-react';
 import { mixColors, isValidHex } from '../utils/color.js';
@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 
 export default function ColorMixer() {
   const { t } = useTranslation();
+  useEffect(() => { document.title = `${t('mixer.title')} — ColorKit`; }, [t]);
   const [c1, setC1] = useState('#7c3aed');
   const [c2, setC2] = useState('#ec4899');
   const [ratio, setRatio] = useState(50);
