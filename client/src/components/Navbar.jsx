@@ -1,21 +1,40 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Palette, Menu, X } from 'lucide-react';
+import { Palette, Menu, X, Globe } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
-const tools = [
-  { label: 'HEX ↔ RGB', path: '/hex-rgb' },
-  { label: 'RGB ↔ HSL', path: '/rgb-hsl' },
-  { label: 'Palette Generator', path: '/palette' },
-  { label: 'Image Colors', path: '/image-colors' },
-  { label: 'Contrast Checker', path: '/contrast' },
-  { label: 'Gradient Maker', path: '/gradient' },
-  { label: 'Color Mixer', path: '/mixer' },
-  { label: 'CSS Named Colors', path: '/named-colors' },
+const LANGS = [
+  { code: 'en', label: 'EN' },
+  { code: 'ko', label: '한' },
+  { code: 'ja', label: '日' },
+  { code: 'zh', label: '中' },
 ];
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
+  const [langOpen, setLangOpen] = useState(false);
   const location = useLocation();
+  const { t, i18n } = useTranslation();
+
+  const navTools = [
+    { label: t('nav.hexRgb'), path: '/hex-rgb' },
+    { label: t('nav.rgbHsl'), path: '/rgb-hsl' },
+    { label: t('nav.palette'), path: '/palette' },
+    { label: t('nav.contrast'), path: '/contrast' },
+  ];
+
+  const allTools = [
+    { label: t('nav.hexRgb'), path: '/hex-rgb' },
+    { label: t('nav.rgbHsl'), path: '/rgb-hsl' },
+    { label: t('nav.palette'), path: '/palette' },
+    { label: t('nav.imageColors'), path: '/image-colors' },
+    { label: t('nav.contrast'), path: '/contrast' },
+    { label: t('nav.gradient'), path: '/gradient' },
+    { label: t('nav.mixer'), path: '/mixer' },
+    { label: t('nav.namedColors'), path: '/named-colors' },
+  ];
+
+  const currentLang = LANGS.find(l => i18n.language?.startsWith(l.code)) || LANGS[0];
 
   return (
     <nav className="sticky top-0 z-50 bg-dark-900/90 backdrop-blur border-b border-dark-700">
@@ -29,7 +48,7 @@ export default function Navbar() {
 
         {/* Desktop nav */}
         <div className="hidden md:flex items-center gap-1">
-          {tools.slice(0, 5).map(t => (
+          {navTools.map(t => (
             <Link
               key={t.path}
               to={t.path}
@@ -43,26 +62,59 @@ export default function Navbar() {
             </Link>
           ))}
           <Link to="/" className="px-3 py-1.5 rounded-lg text-sm text-gray-400 hover:text-white hover:bg-dark-700 transition-colors">
-            All Tools
+            {t('nav.allTools')}
           </Link>
         </div>
 
-        {/* Mobile */}
-        <button onClick={() => setOpen(!open)} className="md:hidden text-gray-400 hover:text-white">
-          {open ? <X size={20} /> : <Menu size={20} />}
-        </button>
+        <div className="flex items-center gap-2">
+          {/* Language switcher */}
+          <div className="relative">
+            <button
+              onClick={() => setLangOpen(!langOpen)}
+              className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-sm text-gray-400 hover:text-white hover:bg-dark-700 transition-colors"
+            >
+              <Globe size={14} />
+              <span>{currentLang.label}</span>
+            </button>
+            {langOpen && (
+              <div className="absolute right-0 top-full mt-1 bg-dark-800 border border-dark-600 rounded-xl shadow-xl overflow-hidden z-50">
+                {LANGS.map(lang => (
+                  <button
+                    key={lang.code}
+                    onClick={() => { i18n.changeLanguage(lang.code); setLangOpen(false); }}
+                    className={`block w-full text-left px-4 py-2 text-sm transition-colors ${
+                      currentLang.code === lang.code
+                        ? 'bg-violet-600 text-white'
+                        : 'text-gray-300 hover:bg-dark-700'
+                    }`}
+                  >
+                    {lang.label} &nbsp;
+                    <span className="text-gray-500 text-xs">
+                      {lang.code === 'en' ? 'English' : lang.code === 'ko' ? '한국어' : lang.code === 'ja' ? '日本語' : '中文'}
+                    </span>
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* Mobile menu */}
+          <button onClick={() => setOpen(!open)} className="md:hidden text-gray-400 hover:text-white">
+            {open ? <X size={20} /> : <Menu size={20} />}
+          </button>
+        </div>
       </div>
 
       {open && (
         <div className="md:hidden bg-dark-800 border-b border-dark-700 px-4 py-3 space-y-1">
-          {tools.map(t => (
+          {allTools.map(tool => (
             <Link
-              key={t.path}
-              to={t.path}
+              key={tool.path}
+              to={tool.path}
               onClick={() => setOpen(false)}
               className="block px-3 py-2 rounded-lg text-sm text-gray-300 hover:text-white hover:bg-dark-700 transition-colors"
             >
-              {t.label}
+              {tool.label}
             </Link>
           ))}
         </div>

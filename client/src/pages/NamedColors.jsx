@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import toast from 'react-hot-toast';
 import { Search } from 'lucide-react';
 import { hexToRgb } from '../utils/color.js';
+import { useTranslation } from 'react-i18next';
 
 const CSS_COLORS = [
   ['aliceblue','#f0f8ff'],['antiquewhite','#faebd7'],['aqua','#00ffff'],['aquamarine','#7fffd4'],
@@ -42,25 +43,25 @@ const CSS_COLORS = [
 ];
 
 export default function NamedColors() {
+  const { t } = useTranslation();
   const [search, setSearch] = useState('');
 
   const filtered = search
-    ? CSS_COLORS.filter(([name, hex]) =>
-        name.includes(search.toLowerCase()) || hex.includes(search.toLowerCase()))
+    ? CSS_COLORS.filter(([name, hex]) => name.includes(search.toLowerCase()) || hex.includes(search.toLowerCase()))
     : CSS_COLORS;
 
-  const copy = (text) => { navigator.clipboard.writeText(text); toast.success('Copied!'); };
+  const copy = (text) => { navigator.clipboard.writeText(text); toast.success(t('common.copied')); };
 
   return (
     <div className="max-w-5xl mx-auto px-4 py-12">
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-white mb-2">CSS Named Colors</h1>
-        <p className="text-gray-400 text-sm">All 140 CSS named colors with their HEX and RGB values. Click to copy.</p>
+        <h1 className="text-2xl font-bold text-white mb-2">{t('namedColors.title')}</h1>
+        <p className="text-gray-400 text-sm">{t('namedColors.desc')}</p>
       </div>
 
       <div className="relative mb-8">
         <Search size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500" />
-        <input className="input pl-10" placeholder="Search by name or hex..."
+        <input className="input pl-10" placeholder={t('namedColors.search')}
           value={search} onChange={e => setSearch(e.target.value)} />
       </div>
 
@@ -83,7 +84,9 @@ export default function NamedColors() {
         })}
       </div>
 
-      <p className="text-center text-sm text-gray-600 mt-8">{filtered.length} colors shown</p>
+      <p className="text-center text-sm text-gray-600 mt-8">
+        {t('namedColors.showing', { count: filtered.length })}
+      </p>
     </div>
   );
 }
