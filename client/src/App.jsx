@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Layout from './components/Layout.jsx';
 import Home from './pages/Home.jsx';
@@ -13,10 +13,16 @@ import NamedColors from './pages/NamedColors.jsx';
 import About from './pages/About.jsx';
 import Privacy from './pages/Privacy.jsx';
 import Terms from './pages/Terms.jsx';
+import Admin from './pages/Admin.jsx';
 
 export default function App() {
+  useEffect(() => {
+    fetch('/api/visit', { method: 'POST' }).catch(() => {});
+  }, []);
+
   return (
     <Routes>
+      <Route path="/admin" element={<Admin />} />
       <Route path="/" element={<Layout />}>
         <Route index element={<Home />} />
         <Route path="hex-rgb" element={<HexRgb />} />
