@@ -18,6 +18,9 @@ import NotFound from './pages/NotFound.jsx';
 
 export default function App() {
   useEffect(() => {
+    if (window.location.pathname.startsWith('/admin')) return
+    if (sessionStorage.getItem('visited')) return
+    sessionStorage.setItem('visited', '1')
     fetch('/api/visit', { method: 'POST' }).catch(() => {});
   }, []);
 
